@@ -1,0 +1,14 @@
+{
+  "name": "feather-weather-listener",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sille Van Landschoot <info@sillevl.be>",
+  "license": "MIT",
+  "dependencies": {
+    "ttn": "^1.3.2"
+  }
+}
