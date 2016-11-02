@@ -1,21 +1,11 @@
 'use strict';
 
 var ttn = require('ttn');
-var r = require('rethinkdb');
+var request = require('request');
+// var r = require('rethinkdb');
 var settings = require('./settings.json');
 
 var client = new ttn.Client('staging.thethingsnetwork.org', settings.appEUI, settings.accessKey);
-
-var connection = null;
-r.connect( {host: 'localhost', port: 28015}, function(err, conn) {
-    if (err) throw err;
-    connection = conn;
-
-    // r.db('test').tableCreate('featherweather').run(connection, function(err, result) {
-    //     if (err) throw err;
-    //     console.log(JSON.stringify(result, null, 2));
-    // });
-});
 
 client.on('connect', function () {
 	console.log('[DEBUG]', 'Connected');
@@ -29,14 +19,25 @@ client.on('activation', function (e) {
 	console.log('[INFO] ', 'Activated: ', e.devEUI);
 });
 
-client.on('uplink', function (msg) {
-	console.info('[INFO] ', 'Uplink: ' + JSON.stringify(msg, null, 2));
-    r.table("featherweather").insert(
-        msg
-    ).run(connection, function(err, result) {
-        if (err) throw err;
-        console.log(JSON.stringify(result, null, 2));
-    })
+client.on('uplink', function (weather) {
+	console.info('[INFO] ', 'Uplink: ' + JSON.stringify(weather, null, 2));
+  var options = {
+    url: settings.api_url,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({weather})
+  }
+  console.log (JSON.stringify({weather}))
+
+  request.post(options, function (error, response, body) {
+    console.log(error)
+    if(!error) {console.log(response.statusCode)}
+    if (!error && response.statusCode == 200) {
+      console.log(body) // Show the HTML for the Google homepage.
+    }
+  })
+
 });
 
 client.on('uplink', function (msg) {

@@ -9,7 +9,7 @@
   "author": "Sille Van Landschoot <info@sillevl.be>",
   "license": "MIT",
   "dependencies": {
-    "rethinkdb": "^2.3.3",
+    "request": "^2.76.0",
     "ttn": "^1.3.2"
   }
 }
