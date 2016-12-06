@@ -1,4 +1,10 @@
 {
-    "appEUI": "your-app-eui",
-    "accessKey": "your-access-key"
+	  "ttn":{
+    		"appEUI": "your-app-eui",
+    		"accessKey": "your-access-key"
+		},
+		"http":{
+				"host": "localhost",
+				"port": 80
+		}
 }
