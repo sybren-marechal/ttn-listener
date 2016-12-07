@@ -4,8 +4,7 @@ var ttn = require('ttn');
 var settings = require('./settings.json');
 var request = require('request');
 
-var client = new ttn.Client('staging.thethingsnetwork.org', settings.ttn.appEUI, settings.ttn.accessKey);
-
+var client = new ttn.Client(settings.ttn.host, settings.ttn.appEUI, settings.ttn.accessKey);
 
 client.on('connect', function () {
 	console.log('[DEBUG]', 'Connected');
@@ -22,17 +21,12 @@ client.on('activation', function (e) {
 client.on('uplink', function (msg) {
 	console.info('[INFO] ', 'Uplink: ' + JSON.stringify(msg, null, 2));
 	var options = {
-					url: 'http://' + settings.http.host + ':' + settings.http.port +'/api/coordinate',
-				method: 'POST',
-				json: true,
-				body: {coordinate: msg}
+		url: 'http://' + settings.http.host + ':' + settings.http.port + settings.http.path,
+		method: 'POST',
+		json: true,
+		body: {settings.http.model: msg}
 	}
 	request(options, function(err,res,body){
-					console.log('status: ' + res.statusCode);
+		console.log('status: ' + res.statusCode);
 	});
-});
-
-client.on('uplink', function (msg) {
-
-
 });

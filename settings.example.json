@@ -1,10 +1,13 @@
 {
 	  "ttn":{
     		"appEUI": "your-app-eui",
-    		"accessKey": "your-access-key"
+    		"accessKey": "your-access-key",
+				"host": "staging.thethingsnetwork.org"
 		},
 		"http":{
 				"host": "localhost",
-				"port": 80
+				"port": 80,
+				"path": "/api/foo/bar",
+				"model": "yourModelName"
 		}
 }
