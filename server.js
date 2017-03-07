@@ -5,8 +5,8 @@ var settings = require('./settings.json');
 var ttn = require('ttn');
 var fs = require('fs');
 
-var region = 'eu';
-var appId = settings.ttn.appEUI;
+var region = settings.ttn.host;
+var appId = settings.ttn.appId;
 var accessKey = settings.ttn.accessKey;
 var options = {
 				  protocol: 'mqtts',  // Assuming that the mqtt-ca certificate (https://www.thethingsnetwork.org/docs/applications/mqtt/quick-start.html) is in the same folder
@@ -34,7 +34,7 @@ client.on('activation', function (e) {
 client.on('message', function(id, message) {
 	console.info('[INFO] ', 'Uplink: ' + JSON.stringify(message, null, 2));
   var options = {
-		 url: 'http://' + settings.http.host + ':' + settings.http.port +'/api/coordinate',
+		 url: 'http://' + settings.http.host + ':' + settings.http.port + settings.http.path,
 		 method: 'POST',
 		 json: true,
 		 body: {coordinate: message}
