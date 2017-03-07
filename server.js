@@ -47,17 +47,12 @@ client.on('message', function(id, message) {
 client.on('uplink', function (msg) {
 	console.info('[INFO] ', 'Uplink: ' + JSON.stringify(msg, null, 2));
 	var options = {
-					url: 'http://' + settings.http.host + ':' + settings.http.port +'/api/coordinate',
-				method: 'POST',
-				json: true,
-				body: {coordinate: msg}
+		url: 'http://' + settings.http.host + ':' + settings.http.port + settings.http.path,
+		method: 'POST',
+		json: true,
+		body: {settings.http.model: msg}
 	}
 	request(options, function(err,res,body){
-					console.log('status: ' + res.statusCode);
+		console.log('status: ' + res.statusCode);
 	});
-});
-
-client.on('uplink', function (msg) {
-
-
 });
